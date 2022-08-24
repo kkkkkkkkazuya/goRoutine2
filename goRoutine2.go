@@ -9,11 +9,11 @@ import (
 
 func main() {
 
-	// goRoutine1()
+	goRoutine1()
 
-	// fmt.Println("")
+	fmt.Println("")
 
-	// goRoutine2()
+	goRoutine2()
 
 	result := testing.Benchmark(func(b *testing.B) { run("A", "B", "C", "D", "E") })
 	fmt.Println(result.T)
@@ -43,51 +43,51 @@ func process(name string, isFin chan bool, wg *sync.WaitGroup) {
 	isFin <- true
 }
 
-// func process1(name string) {
-// 	time.Sleep(2 * time.Second)
-// 	fmt.Println(name)
-// }
+func process1(name string) {
+	time.Sleep(2 * time.Second)
+	fmt.Println(name)
+}
 
-// func goRoutine1() {
-// 	fmt.Println("START")
+func goRoutine1() {
+	fmt.Println("START")
 
-// 	//boolean型のchannel作成
-// 	ch := make(chan bool)
+	//boolean型のchannel作成
+	ch := make(chan bool)
 
-// 	//goroutine作成
-// 	go func() {
-// 		time.Sleep(2 * time.Second)
-// 		ch <- true
-// 	}()
+	//goroutine作成
+	go func() {
+		time.Sleep(2 * time.Second)
+		ch <- true
+	}()
 
-// 	isFin := <-ch
-// 	close(ch)
+	isFin := <-ch
+	close(ch)
 
-// 	fmt.Println(isFin)
-// 	fmt.Println("FINISH")
-// }
+	fmt.Println(isFin)
+	fmt.Println("FINISH")
+}
 
-// func goRoutine2() {
-// 	isFin1 := make(chan bool)
-// 	isFin2 := make(chan bool)
-// 	isFin3 := make(chan bool)
+func goRoutine2() {
+	isFin1 := make(chan bool)
+	isFin2 := make(chan bool)
+	isFin3 := make(chan bool)
 
-// 	fmt.Println("START2")
-// 	go func() {
-// 		process1("A")
-// 		isFin1 <- true
-// 	}()
-// 	go func() {
-// 		process1("B")
-// 		isFin2 <- true
-// 	}()
-// 	go func() {
-// 		process1("C")
-// 		isFin3 <- true
-// 	}()
+	fmt.Println("START2")
+	go func() {
+		process1("A")
+		isFin1 <- true
+	}()
+	go func() {
+		process1("B")
+		isFin2 <- true
+	}()
+	go func() {
+		process1("C")
+		isFin3 <- true
+	}()
 
-// 	<-isFin1
-// 	<-isFin2
-// 	<-isFin3
-// 	fmt.Println("FINISH2")
-// }
+	<-isFin1
+	<-isFin2
+	<-isFin3
+	fmt.Println("FINISH2")
+}
