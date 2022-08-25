@@ -25,6 +25,30 @@ func main() {
 	msg := <-messages
 	fmt.Println(msg)
 
+	ch := make(chan int, 2)
+
+	ch <- 1
+	ch <- 2
+
+	fmt.Println(<-ch)
+	fmt.Println(<-ch)
+
+	pings := make(chan string, 1)
+	pongs := make(chan string, 1)
+
+	ping(pings, "good")
+	pong(pings, pongs)
+	fmt.Println(<-pongs)
+
+}
+
+func ping(pings chan<- string, msg string) {
+	pings <- msg
+}
+
+func pong(pings <-chan string, pongs chan<- string) {
+	msg := <-pings
+	pongs <- msg
 }
 
 // func run(name ...string) {
